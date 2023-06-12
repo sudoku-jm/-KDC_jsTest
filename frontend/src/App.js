@@ -7,6 +7,11 @@ class App {
   constructor($target) {
     this.$target = $target;
 
+    this.DarkmodeToggle = new DarkmodeToggle({
+      $target,
+   
+    });
+
     this.searchInput = new SearchInput({
       $target,
       onSearch: keyword => {

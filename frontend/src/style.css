@@ -5,8 +5,21 @@
   font-style: normal;
 }
 
+:root[color-mode="dark"]{
+  --background:#000;      /*-- 는 css 변수*/
+  --textColor:white;
+}
+*{
+  margin:0;
+  padding:0;
+}
 html {
   box-sizing: border-box;
+}
+
+body{
+  background-color: var(--background);
+  color:var(--textColor);
 }
 
 body * {
@@ -84,11 +97,30 @@ body * {
   width: 100%;
 }
 
-/* dark mode 처리
+@media screen and (max-width : 992px){
+  .SearchResult {
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+  }
+}
+@media screen and (max-width : 768px){
+  .SearchResult {
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+  }
+  .ImageInfo .content-wrapper{
+    width: 100%;
+  }
+}
+@media screen and (max-width : 576px){
+  .SearchResult {
+    grid-template-columns: repeat(1, minmax(250px, 1fr));
+  }
+}
+
+/* dark mode 처리 */
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #000;
     color: white;
   }
 }
-*?
+
