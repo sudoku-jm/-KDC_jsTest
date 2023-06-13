@@ -18,9 +18,27 @@ class ImageInfo {
     this.render();
   }
 
+  
+  showDetail(cat){
+    //이미지 상세 정보 요청
+    console.log('cat.id',cat.cat.id)
+    const { id } = cat.cat;
+    api.fetchCatDetail(id).then(({data}) => {
+      
+      //cat (this.data.cat) 정보 업데이트
+      console.log(data);
+      this.setState({
+        visible : true,
+        cat : data
+      });
+    })
+  }
+
+
+
   render() {
     if (this.data.visible) {
-      const { name, url, temperament, origin } = this.data.image;
+      const { name, url, temperament, origin } = this.data.cat;
 
       this.$imageInfo.innerHTML = `
         <div class="content-wrapper">

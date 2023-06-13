@@ -4,7 +4,11 @@
   font-weight: normal;
   font-style: normal;
 }
+:root{
+  --background:#fff;      /*-- 는 css 변수*/
+  --textColor:black;
 
+}
 :root[color-mode="dark"]{
   --background:#000;      /*-- 는 css 변수*/
   --textColor:white;
@@ -59,9 +63,19 @@ body * {
 }
 
 .SearchInput {
-  width: 100%;
+  width: 80%;
   font-size: 40px;
   padding: 10px 15px;
+  height: 76px;
+}
+
+.RandomButton{
+  width:20%;
+  font-size: 20px;
+  height: 76px;
+  padding:10px;
+  vertical-align: top;
+  cursor: pointer;
 }
 
 .ImageInfo {
@@ -88,13 +102,33 @@ body * {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fff;
+  background-color: var(--background);
+  color:var(--textColor);
   border: 1px solid #eee;
   border-radius: 5px;
 }
 
 .ImageInfo .content-wrapper img {
   width: 100%;
+}
+
+
+.Loading{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height: 100vh;      /*세로로 화면 꽉찬 높이*/
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index:10;
+}
+.Loading p{
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  color:#fff;
+  font-size:40px;
 }
 
 @media screen and (max-width : 992px){
