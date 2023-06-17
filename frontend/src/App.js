@@ -58,7 +58,7 @@ class App {
   }
 
   setState(nextData) {
-    console.log(this);
+    // console.log(this);
     this.data = nextData;
     this.searchResult.setState(nextData);
   }

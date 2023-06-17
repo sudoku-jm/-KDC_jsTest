@@ -21,12 +21,12 @@ class ImageInfo {
   
   showDetail(cat){
     //이미지 상세 정보 요청
-    console.log('cat.id',cat.cat.id)
+    // console.log('cat.id',cat.cat.id)
     const { id } = cat.cat;
     api.fetchCatDetail(id).then(({data}) => {
       
       //cat (this.data.cat) 정보 업데이트
-      console.log(data);
+      // console.log(data);
       this.setState({
         visible : true,
         cat : data
@@ -34,7 +34,36 @@ class ImageInfo {
     })
   }
 
+  //모달 닫기
+  closeImageInfo(){
+    this.setState({
+      visible : false,
+      cat : undefined
+    })
+  }
 
+  //클릭 이벤트들을 따로 만들었다.
+  modalEvent(){
+    //close 버튼이 생성 된 후 동작하기 위해 여기 만든듯?
+    // this.$imageInfo.querySelector('.close').addEventListener('click', e => {
+    //   this.closeImageInfo();
+    // });
+
+
+    //key 이벤트
+    document.addEventListener('keydown', e => {
+      if(e.key === "Escape"){
+        this.closeImageInfo();
+      }
+    });
+
+    //모달 이외의 영역 클릭 이벤트 + close 버튼 클릭 이벤트
+    this.$imageInfo.addEventListener('click', e => {
+      if(e.target.className === "ImageInfo" || e.target.className ==="close"){
+        this.closeImageInfo();
+      }
+    });
+  }
 
   render() {
     if (this.data.visible) {
@@ -53,6 +82,11 @@ class ImageInfo {
           </div>
         </div>`;
       this.$imageInfo.style.display = "block";
+
+   
+      this.modalEvent();
+     
+    
     } else {
       this.$imageInfo.style.display = "none";
     }
