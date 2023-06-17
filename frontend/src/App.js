@@ -25,6 +25,8 @@ class App {
           this.setState(data);
           //로딩 끝 hide
           this.Loading.hide();
+          // 로컬에 저장.
+          this.saveResult(data);
         });
       },
       onRandomSearch : () => {
@@ -55,11 +57,27 @@ class App {
         image: null
       }
     });
+
+
+    this.init(); //초기화
   }
 
   setState(nextData) {
     // console.log(this);
     this.data = nextData;
     this.searchResult.setState(nextData);
+  }
+
+  saveResult(result){
+    //로컬스토리지에 검색 겨로가 저장.
+    localStorage.setItem('lastResult', JSON.stringify(result)); //[object,object] 타입을 string으로 만들어서 저장.
+  }
+
+  init(){
+    //로컬스토리지 lastResult 저장 데이터 가지고 오기
+    //null 데이터 조심.
+    const lastResult = localStorage.getItem('lastResult') === null ? [] : JSON.parse( localStorage.getItem('lastResult') ); //string을 다시 object로 변환.
+
+    this.setState(lastResult);
   }
 }

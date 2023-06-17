@@ -13,9 +13,14 @@ class SearchInput {
     $wrapper.appendChild($searchInput);
     $target.appendChild($wrapper);
     
-    $searchInput.addEventListener("keyup", e => {
-      if (e.keyCode === 13) {
+    $searchInput.addEventListener("keypress", e => {
+      //keyup은 한글에서 2번 호출한다 성능문제. keypress를 사용한다.
+      if(e.key === "Enter"){
         onSearch(e.target.value);
+
+        //최근 키워드 저장.
+        this.KeywordHistory.addKeyword(e.target.value);
+        
       }
     });
     
@@ -29,6 +34,12 @@ class SearchInput {
     //랜덤 버튼 클릭
     $randomButton.addEventListener('click', e => {
       onRandomSearch();
+    });
+
+    this.KeywordHistory = new KeywordHistory({
+      $target,
+      onSearch
+   
     });
 
     // console.log("SearchInput created.", this);
