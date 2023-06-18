@@ -3,6 +3,7 @@ console.log("app is running!");
 class App {
   $target = null;
   data = [];
+  page = 1;     //기본 페이지
 
   constructor($target) {
     this.$target = $target;
@@ -22,7 +23,7 @@ class App {
         //로딩 시작 show
         this.Loading.show();
         api.fetchCats(keyword).then(({ data }) => {
-          this.setState(data);
+          this.setState(data ? data : []);
           //로딩 끝 hide
           this.Loading.hide();
           // 로컬에 저장.
@@ -48,6 +49,28 @@ class App {
           cat
         });
       },
+      onNextPage : () => {      //SearchResult.js로 보냄.
+        
+        //다음페이지 로딩
+        this.Loading.show();
+ 
+        // 키워드 단어 들고오기 => 로컬스토리지 마지막 키워드 데이터를 들고오기.
+        const keywordHistory = localStorage.getItem('keywordHistory') === null ? [] : localStorage.getItem('keywordHistory').split(',');
+        const lastKeyword = keywordHistory[0];
+
+        //페이징 올리기
+        const page = this.page + 1;
+
+        api.fetchCatsPage(lastKeyword, page).then(({ data }) => {
+          let newData = this.data.concat(data);     //새로운 데이터 추가. 배열 합치기.
+          this.setState(newData);
+          
+          // 마지막 페이징 저장.
+          this.page = page;
+          //로딩 끝 hide
+          this.Loading.hide();
+        });
+      }
     });
 
     this.imageInfo = new ImageInfo({
