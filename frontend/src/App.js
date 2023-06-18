@@ -1,3 +1,10 @@
+import Loading from "./Loading.js";
+import DarkmodeToggle from "./DarkmodeToggle.js";
+import SearchInput from "./SearchInput.js";
+import SearchResult from "./SearchResult.js";
+import ImageInfo from "./ImageInfo.js";
+import api from "./api.js";
+
 console.log("app is running!");
 
 class App {
@@ -34,7 +41,7 @@ class App {
         //랜덤 버튼 클릭 이벤트
         this.Loading.show();
         api.fetchRandomCats().then(({data}) => {
-          this.setState(data);
+          this.setState(data ? data : []);
           this.Loading.hide();
         })
       }
@@ -104,3 +111,6 @@ class App {
     this.setState(lastResult);
   }
 }
+
+
+export default App;

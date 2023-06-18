@@ -34,3 +34,6 @@ class DarkmodeToggle {
   }
 
 }
+
+
+export default DarkmodeToggle;

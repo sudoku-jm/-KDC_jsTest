@@ -1,3 +1,5 @@
+import uniqueArray from "./utils/uniqueArray.js";
+
 class KeywordHistory{
     $keywordHistory = null; // 엘리먼트 생성
     data = null;            // 데이터
@@ -37,6 +39,9 @@ class KeywordHistory{
         //3. 배열로 반환 후 로컬스토리지에 다시 저장.
         let keywordHistory = this.getHistory();
         keywordHistory.unshift(keyword);
+        //중복제거
+        keywordHistory = uniqueArray(keywordHistory);
+
         keywordHistory = keywordHistory.slice(0,5); //최신 데이터 ~ 5개까지만 들고있음.
         localStorage.setItem('keywordHistory',keywordHistory.join(','));
 
@@ -69,3 +74,5 @@ class KeywordHistory{
 
    
 }
+
+export default KeywordHistory;
