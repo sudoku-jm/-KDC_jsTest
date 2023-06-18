@@ -7,13 +7,16 @@ class SearchInput {
 
     //검색 input
     const $wrapper = document.createElement("section");
+    $wrapper.className = "SearchInputArea";
+    $target.appendChild($wrapper);
+
     const $searchInput = document.createElement("input");
     this.$searchInput = $searchInput;
     this.$searchInput.placeholder = "고양이를 검색해보세요.|";
-    $wrapper.className = "SearchInputArea";
+    this.$searchInput.autofocus = true;
+  
     $searchInput.className = "SearchInput";
     $wrapper.appendChild($searchInput);
-    $target.appendChild($wrapper);
     
     $searchInput.addEventListener("keypress", e => {
       //keyup은 한글에서 2번 호출한다 성능문제. keypress를 사용한다.
@@ -44,7 +47,6 @@ class SearchInput {
    
     });
 
-    // console.log("SearchInput created.", this);
   }
   render() {}
 }

@@ -9,15 +9,6 @@ class KeywordHistory{
         this.$keywordHistory.className = 'KeywordHistory';
         $target.appendChild(this.$keywordHistory);
         
-        
-        //아직 키워드 데이터가 없어서 나오는게 없다. 
-        //더미데이터로 만들어서 노출시켜본다.
-        // this.data = [
-        //     '아',
-        //     '고양이',
-        //     'cat'
-        // ];
-        
         this.onSearch = onSearch;
         this.init();
         this.render();
@@ -27,7 +18,6 @@ class KeywordHistory{
     init(){
         //로컬스토리지 데이터 들고오기
         const data = this.getHistory();  //split활용, 콤마기준으로 데이터를 나눠 배열로 반환. 
-        // console.log('keywordHistory data',data);
         this.setState(data);
     }
 
@@ -58,11 +48,8 @@ class KeywordHistory{
         this.render();
     }
 
-    render(){
-        this.$keywordHistory.innerHTML = this.data.map( keyword =>  `<li><button>${keyword}</button></li>`  ).join('');
-
-        //클릭 이벤트
-        //console.log(this.$keywordHistory.querySelectorAll('li button')) //[button, button, button] 선택된다.
+    bindEvent(){
+        //TODO : 클릭 이벤트
         this.$keywordHistory.querySelectorAll('li button').forEach(($item, index) => {
             $item.addEventListener('click', () => {
                 console.log($item,index,this.data[index])
@@ -70,7 +57,12 @@ class KeywordHistory{
             });
         });
     }
-
+    
+    render(){
+       this.$keywordHistory.innerHTML = this.data.map( keyword =>  `<li><button>${keyword}</button></li>`  ).join('');
+    
+       this.bindEvent();
+    }
 
    
 }

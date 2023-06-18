@@ -9,8 +9,11 @@ console.log("app is running!");
 
 class App {
   $target = null;
-  data = [];
-  page = 1;     //기본 페이지
+  DEFAULT_PAGE = 1;
+  data = {
+    items : [],        //데이터 리스트
+    page : this.DEFAULT_PAGE,         //기본 페이지
+  };
 
   constructor($target) {
     this.$target = $target;
@@ -30,7 +33,10 @@ class App {
         //로딩 시작 show
         this.Loading.show();
         api.fetchCats(keyword).then(({ data }) => {
-          this.setState(data ? data : []);
+          this.setState({
+            items : data ? data : [],
+            page : this.DEFAULT_PAGE,
+          });
           //로딩 끝 hide
           this.Loading.hide();
           // 로컬에 저장.
@@ -41,7 +47,10 @@ class App {
         //랜덤 버튼 클릭 이벤트
         this.Loading.show();
         api.fetchRandomCats().then(({data}) => {
-          this.setState(data ? data : []);
+          this.setState({
+            items : data ? data : [],
+            page : this.DEFAULT_PAGE,
+          });
           this.Loading.hide();
         })
       }
@@ -49,7 +58,7 @@ class App {
 
     this.searchResult = new SearchResult({
       $target,
-      initialData: this.data,
+      initialData: this.data.items,
       onClick: cat => {
         this.imageInfo.showDetail({
           visible: true,
@@ -70,10 +79,11 @@ class App {
 
         api.fetchCatsPage(lastKeyword, page).then(({ data }) => {
           let newData = this.data.concat(data);     //새로운 데이터 추가. 배열 합치기.
-          this.setState(newData);
+          this.setState({
+            items : newData,
+            page : page,
+          });
           
-          // 마지막 페이징 저장.
-          this.page = page;
           //로딩 끝 hide
           this.Loading.hide();
         });
@@ -95,7 +105,7 @@ class App {
   setState(nextData) {
     // console.log(this);
     this.data = nextData;
-    this.searchResult.setState(nextData);
+    this.searchResult.setState(nextData.items);
   }
 
   saveResult(result){
@@ -108,7 +118,10 @@ class App {
     //null 데이터 조심.
     const lastResult = localStorage.getItem('lastResult') === null ? [] : JSON.parse( localStorage.getItem('lastResult') ); //string을 다시 object로 변환.
 
-    this.setState(lastResult);
+    this.setState({
+      items : lastResult,
+      page : this.DEFAULT_PAGE,
+    });
   }
 }
 
