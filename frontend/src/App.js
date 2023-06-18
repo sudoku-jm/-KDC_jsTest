@@ -34,7 +34,7 @@ class App {
         this.Loading.show();
         api.fetchCats(keyword).then(({ data }) => {
           this.setState({
-            items : data ? data : [],
+            items : data,
             page : this.DEFAULT_PAGE,
           });
           //로딩 끝 hide
@@ -48,7 +48,7 @@ class App {
         this.Loading.show();
         api.fetchRandomCats().then(({data}) => {
           this.setState({
-            items : data ? data : [],
+            items : data,
             page : this.DEFAULT_PAGE,
           });
           this.Loading.hide();
