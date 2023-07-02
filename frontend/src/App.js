@@ -3,6 +3,7 @@ import DarkmodeToggle from "./DarkmodeToggle.js";
 import SearchInput from "./SearchInput.js";
 import SearchResult from "./SearchResult.js";
 import ImageInfo from "./ImageInfo.js";
+import Banner from "./Banner.js";
 import api from "./api.js";
 
 console.log("app is running!");
@@ -29,10 +30,10 @@ class App {
 
     this.searchInput = new SearchInput({
       $target,
-      onSearch: keyword => {
+      onSearch: (keyword, limit) => {
         //로딩 시작 show
         this.Loading.show();
-        api.fetchCats(keyword).then(({ data }) => {
+        api.fetchCatsWithLimit(keyword,limit).then(({ data }) => {
           this.setState({
             items : data,
             page : this.DEFAULT_PAGE,
@@ -56,6 +57,10 @@ class App {
       }
     });
 
+    this.Banner = new Banner({
+      $target,
+    });
+
     this.searchResult = new SearchResult({
       $target,
       initialData: this.data.items,
@@ -75,10 +80,11 @@ class App {
         const lastKeyword = keywordHistory[0];
 
         //페이징 올리기
-        const page = this.page + 1;
+        let page = this.data.page + 1;
+        console.log('this.page',page)
 
         api.fetchCatsPage(lastKeyword, page).then(({ data }) => {
-          let newData = this.data.concat(data);     //새로운 데이터 추가. 배열 합치기.
+          let newData = this.data.items.concat(data);     //새로운 데이터 추가. 배열 합치기.
           this.setState({
             items : newData,
             page : page,

@@ -49,6 +49,7 @@ class KeywordHistory{
     }
 
     bindEvent(){
+        console.log('this.$limitCount',this.$limitCount)
         //TODO : 클릭 이벤트
         this.$keywordHistory.querySelectorAll('li button').forEach(($item, index) => {
             $item.addEventListener('click', () => {

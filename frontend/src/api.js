@@ -27,7 +27,11 @@ const api = {
   fetchCats: keyword => {
     return request(`${API_ENDPOINT}/api/cats/search?q=${keyword}`);
   },
+  fetchCatsWithLimit: (keyword,limit) => {
+    return request(`${API_ENDPOINT}/api/cats/search?q=${keyword}&limit=${limit}`);
+  },
   fetchCatsPage: (keyword, page) => {
+    console.log('fetchCatsPage',keyword,page);
     return request(`${API_ENDPOINT}/api/cats/search?q=${keyword}&page=${page}`);
   },
   fetchRandomCats : () => {

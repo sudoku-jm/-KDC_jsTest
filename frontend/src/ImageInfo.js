@@ -18,8 +18,16 @@ class ImageInfo {
   setState(nextData) {
     this.data = nextData;
     this.render();
+    this.setFade(nextData.visible);
   }
 
+  setFade(visible){
+    if(visible){
+      this.$imageInfo.classList.add('show');
+    }else{
+      this.$imageInfo.classList.remove('show');
+    }
+  }
   
   async showDetail(data){
 
@@ -77,14 +85,13 @@ class ImageInfo {
             <div>태생: ${origin}</div>
           </div>
         </div>`;
-      this.$imageInfo.style.display = "block";
+        // this.$imageInfo.style.display = "block";
 
-   
       this.modalEvent();
      
     
     } else {
-      this.$imageInfo.style.display = "none";
+      // this.$imageInfo.style.display = "none";
     }
   }
 }

@@ -21,7 +21,7 @@ class SearchInput {
     $searchInput.addEventListener("keypress", e => {
       //keyup은 한글에서 2번 호출한다 성능문제. keypress를 사용한다.
       if(e.key === "Enter"){
-        onSearch(e.target.value);
+        onSearch(e.target.value, this.$limitCount.value);
 
         //최근 키워드 저장.
         this.KeywordHistory.addKeyword(e.target.value);
@@ -29,6 +29,21 @@ class SearchInput {
       }
     });
     
+
+    // 셀렉트 UI 
+    const $limitCount = document.createElement('select');
+    this.$limitCount = $limitCount;
+    this.$limitCount.className = "LimitCount";
+    const limitCountOptions = [10,25,50];
+    limitCountOptions.map((option) => {
+      let $option = document.createElement('option');
+      $option.value = option;
+      $option.textContent = `${option}개`;
+      $limitCount.appendChild($option);
+    })  
+    $wrapper.appendChild($limitCount);
+
+
     //랜덤 버튼
     const $randomButton = document.createElement("button");
     this.$randomButton = $randomButton;
@@ -42,7 +57,7 @@ class SearchInput {
     });
 
     this.KeywordHistory = new KeywordHistory({
-      $target,
+      $target : $wrapper,
       onSearch
    
     });
